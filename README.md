@@ -1,0 +1,2 @@
+# business-central-sdk
+Business Central SDK es una suite de herramientas TypeScript diseñada para facilitar la comunicación con las APIs OData v4 de Microsoft Dynamics 365 Business Central. Este repositorio (monorepo) alberga:  Core Client: Una librería ligera y sin dependencias de framework para realizar operaciones REST/OData desde cualquier entorno Node.js. NestJS Module: Un wrapper completo con inyección de dependencias configurada, listo para usar en arquitecturas NestJS.
