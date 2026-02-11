@@ -137,4 +137,3 @@ dist
 
 # Internal / local-only files
 .agents/
-MONOREPO_PLAN.md
