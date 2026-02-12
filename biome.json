@@ -33,6 +33,6 @@
     }
   },
   "files": {
-    "ignore": ["node_modules", "dist", "*.d.ts", "pnpm-lock.yaml", ".agents"]
+    "ignore": ["node_modules", "dist", "*.d.ts", "pnpm-lock.yaml", ".agents", "dumy-nestjs"]
   }
 }
