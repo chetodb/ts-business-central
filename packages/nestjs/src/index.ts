@@ -3,4 +3,4 @@
  *
  * NestJS integration module for the Business Central SDK.
  */
-export {};
+export * from './business-central.module.js';

@@ -15,7 +15,9 @@
       }
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc --build",
     "dev": "tsc --build --watch",
@@ -31,8 +33,10 @@
   "devDependencies": {
     "@nestjs/common": "^11.0.0",
     "@nestjs/core": "^11.0.0",
+    "@vitest/coverage-v8": "^4.0.18",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.0",
-    "typescript": "^5.7.0"
+    "typescript": "^5.7.0",
+    "vitest": "^4.0.18"
   }
 }
