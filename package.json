@@ -11,6 +11,9 @@
     "dev": "tsc --build --watch",
     "lint": "biome check .",
     "format": "biome check --write .",
+    "test": "vitest run --silent",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
     "playground": "tsx playground/index.ts",
     "playground:watch": "tsx watch playground/index.ts",
     "changeset": "changeset",
@@ -20,7 +23,9 @@
   "devDependencies": {
     "@biomejs/biome": "^1.9.0",
     "@changesets/cli": "^2.27.0",
+    "@vitest/coverage-v8": "^4.0.18",
     "tsx": "^4.21.0",
-    "typescript": "^5.7.0"
+    "typescript": "^5.7.0",
+    "vitest": "^4.0.18"
   }
 }
