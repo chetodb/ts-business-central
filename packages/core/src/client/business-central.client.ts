@@ -86,7 +86,7 @@ export class BusinessCentralClient {
 
     if (debug.duration) {
       console.debug(
-        `[BC SDK] GET ${endpoint} completed in ${(performance.now() - startTime).toFixed(1)}ms`,
+        `[BC CLIENT] GET ${endpoint} completed in ${(performance.now() - startTime).toFixed(1)}ms`,
       );
     }
 

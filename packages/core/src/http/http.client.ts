@@ -118,7 +118,7 @@ export class HttpClient {
     // 429 Too Many Requests → rotate key and retry
     if (status === 429) {
       console.warn(
-        `[BC SDK] 429 Too Many Requests (attempt ${currentRetry}/${maxRetries}). Rotating key...`,
+        `[BC HTTPS] 429 Too Many Requests (attempt ${currentRetry}/${maxRetries}). Rotating key...`,
       );
       this.rotateKey();
       await this.sleep(2000);
@@ -128,7 +128,7 @@ export class HttpClient {
     // 401 Unauthorized → rotate key, force token refresh and retry
     if (status === 401) {
       console.warn(
-        `[BC SDK] 401 Unauthorized (attempt ${currentRetry}/${maxRetries}). Rotating key and refreshing token...`,
+        `[BC HTTPS] 401 Unauthorized (attempt ${currentRetry}/${maxRetries}). Rotating key and refreshing token...`,
       );
       this.rotateKey();
       await this.getAuthHeader(true);
@@ -139,13 +139,13 @@ export class HttpClient {
     if (status === 400) {
       const body = await this.safeReadJson(response);
       const detail = (body as Record<string, Record<string, string>>)?.error?.message || statusText;
-      console.error(`[BC SDK] 400 Bad Request: ${detail}`);
+      console.error(`[BC HTTPS] 400 Bad Request: ${detail}`);
       return false;
     }
 
     // 501 Not Implemented → endpoint doesn't support this operation
     if (status === 501) {
-      console.error(`[BC SDK] 501 Not Implemented: ${response.url}`);
+      console.error(`[BC HTTPS] 501 Not Implemented: ${response.url}`);
       return false;
     }
 
@@ -153,7 +153,7 @@ export class HttpClient {
     if (status >= 500) {
       const delay = 2 ** currentRetry * retryDelay;
       console.warn(
-        `[BC SDK] Server error ${status} (attempt ${currentRetry}/${maxRetries}). Retrying in ${delay / 1000}s...`,
+        `[BC HTTPS] Server error ${status} (attempt ${currentRetry}/${maxRetries}). Retrying in ${delay / 1000}s...`,
       );
       await this.sleep(delay);
       return true;
@@ -163,14 +163,14 @@ export class HttpClient {
     if (status === 408) {
       const delay = 2 ** currentRetry * retryDelay;
       console.warn(
-        `[BC SDK] Request timeout (attempt ${currentRetry}/${maxRetries}). Retrying in ${delay / 1000}s...`,
+        `[BC HTTPS] Request timeout (attempt ${currentRetry}/${maxRetries}). Retrying in ${delay / 1000}s...`,
       );
       await this.sleep(delay);
       return true;
     }
 
     // Other errors → log and stop
-    console.error(`[BC SDK] HTTP ${status} ${statusText}`);
+    console.error(`[BC HTTPS] HTTP ${status} ${statusText}`);
     return false;
   }
 
@@ -188,11 +188,13 @@ export class HttpClient {
     const message = err instanceof Error ? err.message : String(err);
 
     if (isAbort) {
-      console.warn(`[BC SDK] Request timeout (attempt ${currentRetry}/${maxRetries}): ${message}`);
+      console.warn(
+        `[BC HTTPS] Request timeout (attempt ${currentRetry}/${maxRetries}): ${message}`,
+      );
       return currentRetry < maxRetries;
     }
 
-    console.error(`[BC SDK] Network error (attempt ${currentRetry}/${maxRetries}): ${message}`);
+    console.error(`[BC HTTPS] Network error (attempt ${currentRetry}/${maxRetries}): ${message}`);
     return currentRetry < maxRetries;
   }
 
