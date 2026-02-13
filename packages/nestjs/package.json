@@ -2,9 +2,9 @@
   "name": "@chetodb/nestjs-business-central",
   "version": "0.0.0",
   "type": "module",
-  "description": "NestJS integration module for @chetodb/business-central SDK",
+  "description": "NestJS module for seamless integration with Microsoft Dynamics 365 Business Central.",
   "license": "MIT",
-  "author": "David Ch",
+  "author": "David Cheto (ChetoDB)",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -15,9 +15,7 @@
       }
     }
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "scripts": {
     "build": "tsc --build",
     "dev": "tsc --build --watch",
