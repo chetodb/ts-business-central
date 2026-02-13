@@ -70,7 +70,7 @@ describe('BusinessCentralClient', () => {
     await client.get('items', undefined, undefined, { duration: true });
 
     expect(debugSpy).toHaveBeenCalledWith(
-      expect.stringContaining('[BC SDK] GET items completed in'),
+      expect.stringContaining('[BC CLIENT] GET items completed in'),
     );
     debugSpy.mockRestore();
   });

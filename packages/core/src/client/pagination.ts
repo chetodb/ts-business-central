@@ -30,7 +30,7 @@ export async function paginationLoop<T>(
 
     if (debugOptions.showPaginationProgress) {
       console.debug(
-        `[BC SDK] ${endpoint} — page ${pageCount}: ${response.value.length} records (total: ${allRecords.length})`,
+        `[BC Pagination] ${endpoint} — page ${pageCount}: ${response.value.length} records (total: ${allRecords.length})`,
       );
     }
 
