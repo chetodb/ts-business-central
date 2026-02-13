@@ -1,106 +1,70 @@
 # TS Business Central
 
-**La suite definitiva de TypeScript para Integraciones con Microsoft Business Central.**
+**TypeScript toolkit for Microsoft Dynamics 365 Business Central integration.**
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
+[Español (README.es.md)](./README.es.md)
 
-Este monorepo alberga un conjunto de librerías modernas y resilientes diseñadas para conectar aplicaciones Node.js con el ERP de Microsoft Business Central (API Cloud).
+---
 
-## 📦 Paquetes
+## 🌟 Overview
 
-Este proyecto se divide en módulos especializados para mantener tu código limpio y ligero:
+`ts-business-central` is a professional-grade monorepo containing a suite of libraries designed to make Business Central integrations reliable, type-safe, and easy to maintain.
 
-| Paquete                                                     | Descripción                                                                                             | NPM    |
-| ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------ |
-| **[`@chetodb/business-central`](./packages/core)**          | **Core SDK.** Cliente HTTP puro, agnóstico de frameworks. Ideal para scripts, AWS Lambda, Express, etc. | `Soon` |
-| **[`@chetodb/nestjs-business-central`](./packages/nestjs)** | **NestJS Module.** Adaptador nativo para inyección de dependencias y configuración en proyectos NestJS. | `Soon` |
+### 📦 Included Packages
 
-## ✨ Características Principales
+| Package | Version | Description |
+| --- | --- | --- |
+| [**`@chetodb/business-central`**](./packages/core) | ![NPM](https://img.shields.io/npm/v/@chetodb/business-central?color=blue) | **Core SDK**: Resilience, Key Rotation, and OData CRUD. |
+| [**`@chetodb/nestjs-business-central`**](./packages/nestjs) | ![NPM](https://img.shields.io/npm/v/@chetodb/nestjs-business-central?color=green) | **NestJS Module**: Native framework integration. |
 
-Diseñado para resolver los problemas reales de integración en producción:
+---
 
-- 🔒 **Autenticación Gestionada**: Olvídate de renovar tokens. El sistema gestiona automáticamente el ciclo de vida de los tokens de Azure AD.
-- 🔄 **Rotación de Claves Inteligente**: Soporte para múltiples credenciales (Azure Client Secrets) que rotan automáticamente para evitar errores de límite de tasa (429 Too Many Requests).
-- 🛡️ **Resiliencia Integrada**: Lógica de reintentos avanzada con _exponential backoff_ para fallos de red y errores transitorios del servidor.
-- ⚡ **Fluent OData Query**: Utilidades tipadas para construir consultas complejas (`$filter`, `$select`, `$expand`) sin concatenar strings manualmente.
-- 📝 **Tipado Fuerte**: Interfaces TypeScript completas para una experiencia de desarrollo segura y con autocompletado.
+## 🚀 Getting Started
 
-## 🚀 Instalación
-
-Elige el paquete que mejor se adapte a tu arquitectura:
-
-### Para aplicaciones TypeScript/Node.js estándar
+To install the Core SDK in your project:
 
 ```bash
 pnpm add @chetodb/business-central
+# or
+npm install @chetodb/business-central
 ```
 
-### Para aplicaciones NestJS
+### 🛠 Quick Example
 
-```bash
-pnpm add @chetodb/nestjs-business-central @chetodb/business-central
-```
+```ts
+import { BusinessCentralClient } from '@chetodb/business-central';
 
-## 📚 Uso Rápido
-
-### Core SDK
-
-```typescript
-import { BcClient } from '@chetodb/business-central';
-
-const client = new BcClient({
+const client = new BusinessCentralClient({
   tenantId: 'your-tenant-id',
-  environment: 'Production',
-  companyId: 'your-company-id',
-  auth: { clientId: '...', clientSecret: '...' },
+  companyName: 'CRONUS',
+  azureKeys: [{ name: 'primary', clientId: '...', clientSecret: '...' }]
 });
 
-const customers = await client.resource('customers').find({
-  $filter: 'balance gt 0',
-});
+const customers = await client.get('customers', { top: 5 });
 ```
 
-### NestJS Module
+---
 
-```typescript
-// app.module.ts
-@Module({
-  imports: [
-    BcModule.forRoot({
-      tenantId: 'your-tenant-id',
-      // ... configuración
-    }),
-  ],
-})
-export class AppModule {}
+## 🧪 Development & Monorepo
 
-// tu-servicio.ts
-@Injectable()
-export class InvoiceService {
-  constructor(private readonly bcClient: BcClient) {}
-
-  async getInvoices() {
-    return this.bcClient.resource('salesInvoices').getAll();
-  }
-}
-```
-
-## 🛠️ Desarrollo (Monorepo)
-
-Este proyecto utiliza **pnpm workspaces**. Para empezar a contribuir:
+This project uses `pnpm` workspaces for efficient management.
 
 ```bash
-# Instalar dependencias
+# Install all dependencies
 pnpm install
 
-# Compilar todos los paquetes
+# Build all packages
 pnpm build
 
-# Ejecutar tests
+# Run tests across the monorepo
 pnpm test
 ```
 
-## 📄 Licencia
+---
 
-MIT © [ChetoDB](https://github.com/chetodb)
+## 🤝 Contribution & Governance
+
+We welcome contributions! Please see our [Contributing Guide](./CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+
+- **License**: [MIT](./LICENSE) © 2026 David Cheto (ChetoDB)
+- **Status**: Active development 🏗️
