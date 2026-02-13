@@ -2,7 +2,7 @@
 
 **El toolkit de TypeScript para integraciones con Microsoft Dynamics 365 Business Central.**
 
-[Español](#español) | [English (README.md)](./README.md)
+[English (README.md)](./README.md)
 
 ---
 
