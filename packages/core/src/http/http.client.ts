@@ -1,5 +1,4 @@
 import type { BcRequestOptions } from '../types/options.types.js';
-import { HttpError, ODataError } from './http.errors.js';
 import type { HttpMethod } from './http.types.js';
 
 /** Callback to obtain a valid Authorization header (e.g. 'Bearer xxx'). */
