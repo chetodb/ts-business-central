@@ -2,7 +2,7 @@
 
 **SDK de TypeScript moderno, resiliente y con tipos seguros para Microsoft Dynamics 365 Business Central.**
 
-[Español](#español) | [English (README.md)](./README.md)
+[English (README.md)](./README.md)
 
 ---
 
