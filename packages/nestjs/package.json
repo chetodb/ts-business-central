@@ -1,0 +1,40 @@
+{
+  "name": "@chetodb/nestjs-business-central",
+  "version": "0.0.0",
+  "type": "module",
+  "description": "NestJS module for seamless integration with Microsoft Dynamics 365 Business Central.",
+  "license": "MIT",
+  "author": "David Cheto (ChetoDB)",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc --build",
+    "dev": "tsc --build --watch",
+    "clean": "tsc --build --clean"
+  },
+  "dependencies": {
+    "@chetodb/business-central": "workspace:*"
+  },
+  "peerDependencies": {
+    "@nestjs/common": "^10.0.0 || ^11.0.0",
+    "@nestjs/core": "^10.0.0 || ^11.0.0"
+  },
+  "devDependencies": {
+    "@nestjs/common": "^11.0.0",
+    "@nestjs/core": "^11.0.0",
+    "@vitest/coverage-v8": "^4.0.18",
+    "reflect-metadata": "^0.2.0",
+    "rxjs": "^7.8.0",
+    "typescript": "^5.7.0",
+    "vitest": "^4.0.18"
+  }
+}
