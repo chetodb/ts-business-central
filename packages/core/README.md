@@ -129,3 +129,5 @@ const client = new BusinessCentralClient({
 ```
 
 ---
+
+- **License**: [MIT](./LICENSE) © 2026 David Cheto (ChetoDB)
