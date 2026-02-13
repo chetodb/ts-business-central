@@ -19,7 +19,9 @@
   "scripts": {
     "build": "tsc --build",
     "dev": "tsc --build --watch",
-    "clean": "tsc --build --clean"
+    "clean": "tsc --build --clean",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "devDependencies": {
     "typescript": "^5.7.0"
