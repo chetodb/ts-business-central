@@ -1,45 +1,20 @@
 # Módulo NestJS para Business Central (Español)
 
+> 🚧 **Work In Progress (En Construcción).** Este módulo es actualmente un prototipo y se encuentra en desarrollo activo. Aún no está listo para uso en producción.
+
 **Módulo de integración fluida para Microsoft Dynamics 365 Business Central en aplicaciones NestJS.**
 
-[Español](#español) | [English (README.md)](./README.md)
+[English (README.md)](./README.md) | [**Volver al Repositorio Principal**](../../README.es.md)
 
 ---
 
-Este paquete proporciona un envoltorio (wrapper) sobre el Core SDK para facilitar la inyección de dependencias y la configuración centralizada en entornos NestJS.
+Este paquete proporcionará un envoltorio (wrapper) sobre el Core SDK para facilitar la inyección de dependencias y la configuración centralizada en entornos NestJS.
 
-> **Estado**: Este paquete está actualmente en una fase inicial de desarrollo. La API está sujeta a cambios.
-
-### ✨ Características clave
+### ✨ Características Planeadas
 
 - 🧩 **Integración Nativa**: Diseñado siguiendo los patrones de módulos de NestJS.
 - 💉 **Inyección de Dependencias**: Acceso sencillo al `BusinessCentralClient` en cualquier servicio.
-
-### 🚀 Instalación
-
-```bash
-pnpm add @chetodb/nestjs-business-central @chetodb/business-central
-```
-
-### 🛠️ Uso básico (Vista previa)
-
-```ts
-import { Module } from '@nestjs/common';
-import { BusinessCentralModule } from '@chetodb/nestjs-business-central';
-
-@Module({
-  imports: [
-    BusinessCentralModule.forRoot({
-      tenantId: 'your-tenant-id',
-      companyName: 'CRONUS',
-      azureKeys: [
-        { name: 'main', clientId: '...', clientSecret: '...' }
-      ],
-    }),
-  ],
-})
-export class AppModule {}
-```
+- 🔄 **Configuración Asíncrona**: Soporte para `forRootAsync` usando ConfigModule.
 
 ---
 

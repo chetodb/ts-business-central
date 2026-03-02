@@ -1,8 +1,12 @@
 # Business Central SDK Core
 
+[![NPM Version](https://img.shields.io/npm/v/@chetodb/business-central.svg)](https://www.npmjs.com/package/@chetodb/business-central)
+[![NPM Downloads](https://img.shields.io/npm/dm/@chetodb/business-central.svg)](https://www.npmjs.com/package/@chetodb/business-central)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
 **Modern, resilient, and type-safe TypeScript SDK for Microsoft Dynamics 365 Business Central.**
 
-[Español (README.es.md)](./README.es.md)
+[Español (README.es.md)](./README.es.md) | [**Return to Monorepo Root**](../../README.md)
 
 ---
 
@@ -52,6 +56,7 @@ const customers = await client.get<Customer>('customers', {
 The `BusinessCentralClient` provides a full set of methods for interacting with the BC API.
 
 #### `get<T>(endpoint, options)`
+
 Retrieves records with automatic pagination and OData support.
 
 ```ts
@@ -64,6 +69,7 @@ const items = await client.get('item', {
 ```
 
 #### `post<T>(endpoint, body)`
+
 Creates a new record.
 
 ```ts
@@ -75,6 +81,7 @@ const created = await client.post('item', newItem);
 ```
 
 #### `patch<T>(endpoint, criteria, data)`
+
 Partially updates an existing record. It handles the OData key predicate and includes `If-Match: *` by default.
 
 ```ts
@@ -85,6 +92,7 @@ await client.patch('item', criteria, newData);
 ```
 
 #### `put<T>(endpoint, criteria, data)`
+
 Replaces an existing record entirely. It also includes `If-Match: *` by default.
 
 ```ts
@@ -98,6 +106,7 @@ await client.put('item', criteria, fullData);
 ```
 
 #### `delete(endpoint, criteria)`
+
 Deletes a record based on key criteria.
 
 ```ts
@@ -106,6 +115,7 @@ await client.delete('item', criteria);
 ```
 
 #### `executeAction<T>(endpoint, data)`
+
 Executes an **unbound** OData action. Note: In Business Central, unbound actions use a specific route (`ODataV4/ActionName`).
 
 ```ts
