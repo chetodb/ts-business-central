@@ -23,6 +23,12 @@ export class HttpClient {
   /**
    * Executes an HTTP request with retry logic, automatic token refresh,
    * and key rotation on rate limiting.
+   *
+   * @param method - The HTTP method to use (e.g., 'GET', 'POST').
+   * @param url - The fully qualified URL for the request.
+   * @param data - Optional request body payload (will be JSON stringified).
+   * @param options - Optional request-specific options overriding defaults (e.g. maxRetries, timeout).
+   * @returns The parsed JSON response of type `T`, or `undefined` if the response is 204 No Content or cannot be fulfilled.
    */
   async request<T>(
     method: HttpMethod,
@@ -46,7 +52,7 @@ export class HttpClient {
       try {
         const authHeader = await this.getAuthHeader(false);
         if (!authHeader) {
-          return undefined; // Si no hay token después de rotar llaves, abortamos.
+          return undefined; // If no token is acquired after key rotation, abort the request.
         }
 
         const headers: Record<string, string> = {

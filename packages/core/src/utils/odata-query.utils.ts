@@ -19,7 +19,8 @@ export function formatODataKeys(criteria: unknown): string {
 }
 
 /**
- * Converts BcGetOptions into an OData query string.
+ * Converts `BcGetOptions` into an OData query string.
+ * Starts with `?` if options are present.
  *
  * @example
  * formatODataQueryOptions({ filter: "Name eq 'Test'", top: 10 })
