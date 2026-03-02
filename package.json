@@ -2,6 +2,18 @@
   "name": "ts-business-central",
   "private": true,
   "type": "module",
+  "description": "Modern, resilient and type-safe TypeScript SDK ecosystem for Microsoft Dynamics 365 Business Central.",
+  "author": "David Cheto (ChetoDB)",
+  "license": "MIT",
+  "homepage": "https://github.com/ChetoDB/ts-business-central#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChetoDB/ts-business-central.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ChetoDB/ts-business-central/issues"
+  },
+  "keywords": ["business-central", "dynamics-365", "microsoft", "erp", "sdk", "typescript"],
   "packageManager": "pnpm@9.15.4",
   "engines": {
     "node": ">=20.0.0"
@@ -9,6 +21,7 @@
   "scripts": {
     "build": "tsc --build",
     "dev": "tsc --build --watch",
+    "clean": "tsc --build --clean",
     "lint": "biome check .",
     "format": "biome check --write .",
     "test": "vitest run --silent",

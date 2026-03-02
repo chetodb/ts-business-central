@@ -49,7 +49,6 @@ export class BcFilter {
 
   /**
    * Checks if a field contains a substring: `contains(field, value)`.
-   *
    * NOTE: May return 501 on Page-type Web Services in Business Central.
    */
   contains(field: string, value: string): this {
@@ -66,9 +65,7 @@ export class BcFilter {
     return this.pushCondition(`endswith(${field}, ${this.formatValue(value)})`);
   }
 
-  /**
-   * Shorthand for an inclusive range: `(field ge from and field le to)`.
-   */
+  /** Shorthand for an inclusive range: `(field ge from and field le to)`. */
   between(
     field: string,
     from: string | number | boolean | Date,
@@ -89,9 +86,8 @@ export class BcFilter {
 
   /**
    * Checks if a field value is in a set of values: `field in ('a','b')`.
-   *
-   * NOTE: Only supported in recent Business Central versions.
-   * with schemaversion 2.1 or later. May return 501 on older versions or Page-type Web Services.
+   * NOTE: Only supported in recent Business Central versions with schemaversion 2.1 or later.
+   * May return 501 on older versions or Page-type Web Services.
    */
   in(field: string, values: (string | number)[]): this {
     if (values.length === 0) return this;

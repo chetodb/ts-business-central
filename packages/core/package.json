@@ -5,6 +5,16 @@
   "description": "Modern, resilient and type-safe TypeScript SDK for Microsoft Dynamics 365 Business Central.",
   "license": "MIT",
   "author": "David Cheto (ChetoDB)",
+  "homepage": "https://github.com/ChetoDB/ts-business-central/tree/main/packages/core#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChetoDB/ts-business-central.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/ChetoDB/ts-business-central/issues"
+  },
+  "keywords": ["business-central", "dynamics", "sdk", "api", "typescript", "erp", "microsoft"],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
