@@ -1,8 +1,12 @@
 # Business Central SDK Core (Español)
 
+[![NPM Version](https://img.shields.io/npm/v/@chetodb/business-central.svg)](https://www.npmjs.com/package/@chetodb/business-central)
+[![NPM Downloads](https://img.shields.io/npm/dm/@chetodb/business-central.svg)](https://www.npmjs.com/package/@chetodb/business-central)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
 **SDK de TypeScript moderno, resiliente y con tipos seguros para Microsoft Dynamics 365 Business Central.**
 
-[English (README.md)](./README.md)
+[English (README.md)](./README.md) | [**Volver al Repositorio Principal**](../../README.es.md)
 
 ---
 
@@ -52,6 +56,7 @@ const customers = await client.get<Customer>('customers', {
 El `BusinessCentralClient` proporciona un conjunto completo de métodos para interactuar con la API de BC.
 
 #### `get<T>(endpoint, options)`
+
 Recupera registros con paginación automática y soporte OData.
 
 ```ts
@@ -64,6 +69,7 @@ const items = await client.get('item', {
 ```
 
 #### `post<T>(endpoint, body)`
+
 Crea un nuevo registro.
 
 ```ts
@@ -75,6 +81,7 @@ const created = await client.post('item', newItem);
 ```
 
 #### `patch<T>(endpoint, criteria, data)`
+
 Actualiza parcialmente un registro existente. Gestiona automáticamente el predicado de clave OData e incluye `If-Match: *` por defecto.
 
 ```ts
@@ -85,6 +92,7 @@ await client.patch('item', criteria, newData);
 ```
 
 #### `put<T>(endpoint, criteria, data)`
+
 Reemplaza un registro existente por completo. También incluye `If-Match: *` por defecto.
 
 ```ts
@@ -98,6 +106,7 @@ await client.put('item', criteria, fullData);
 ```
 
 #### `delete(endpoint, criteria)`
+
 Elimina un registro basado en criterios de clave.
 
 ```ts
@@ -106,6 +115,7 @@ await client.delete('item', criteria);
 ```
 
 #### `executeAction<T>(endpoint, data)`
+
 Ejecuta una acción OData **no vinculada** (unbound). Nota: En Business Central, las acciones no vinculadas usan una ruta específica (`ODataV4/NombreAccion`).
 
 ```ts

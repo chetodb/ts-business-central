@@ -1,5 +1,9 @@
 # TS Business Central (Español)
 
+[![code style: biome](https://img.shields.io/badge/code_style-biome-FFBD2D.svg)](https://biomejs.dev)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Node.js Version](https://img.shields.io/node/v/@chetodb/business-central.svg)](https://nodejs.org)
+
 **El toolkit de TypeScript para integraciones con Microsoft Dynamics 365 Business Central.**
 
 [English (README.md)](./README.md)
