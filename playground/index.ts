@@ -82,7 +82,7 @@ async function main() {
     // const deleteCriteria = { Item_No: 'item-001', Description: 'SDK-TEST' };
     // await client.delete('item', deleteCriteria);
     //=================================================================
-    //Delete
+    // Execute Action
     // console.log('[6/6] EXECUTE ACTION');
     // await client.executeAction('', { documentNo: '123' });
   } catch (error) {
