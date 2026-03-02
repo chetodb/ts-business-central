@@ -21,6 +21,12 @@ export class OAuth2Provider implements AuthProvider {
   private readonly grantType: string;
   private readonly keys: AzureKey[];
 
+  /**
+   * Initializes the OAuth2 Provider with the SDK options.
+   *
+   * @param options - The fully resolved SDK configuration options.
+   * @throws Error if `options.azureKeys` is empty or undefined.
+   */
   constructor(private readonly options: Required<BcClientOptions>) {
     if (!options.azureKeys || options.azureKeys.length === 0) {
       throw new Error('[BC - Auth] No Azure Keys provided. At least one key is required.');
@@ -46,6 +52,9 @@ export class OAuth2Provider implements AuthProvider {
   /**
    * Returns a valid access token. Uses cached token if still valid,
    * otherwise requests a new one from Azure AD.
+   *
+   * @param forceRefresh - If true, bypasses the cache and forces a new token request.
+   * @returns The raw access token string, or null if the request fails repeatedly.
    */
   async getToken(forceRefresh = false): Promise<string | null> {
     if (
@@ -116,7 +125,12 @@ export class OAuth2Provider implements AuthProvider {
     return null;
   }
 
-  /** Returns a full 'Bearer xxx' authorization header value. */
+  /**
+   * Returns a full 'Bearer xxx' authorization header value.
+   *
+   * @param forceRefresh - If true, bypasses the cache and forces a new token request.
+   * @returns The fully formatted Authorization header string, or null if token acquisition fails.
+   */
   async getAuthHeader(forceRefresh = false): Promise<string | null> {
     const token = await this.getToken(forceRefresh);
     return token ? `Bearer ${token}` : null;

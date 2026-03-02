@@ -4,6 +4,13 @@ import type { BcDebugOptions, BcGetResponse, BcRequestOptions } from '../types/i
 /**
  * Follows `@odata.nextLink` to collect all pages of results
  * into a single array.
+ *
+ * @param http - The configured internal HTTP client.
+ * @param firstUrl - The initial URL to start fetching from.
+ * @param endpoint - The name of the endpoint (used for debug logging).
+ * @param debugOptions - Debug configuration to track pagination progress.
+ * @param requestOptions - Extra request-level options like timeout or custom headers.
+ * @returns A promise resolving to the concatenated array of all records `T[]`, or undefined if a request fails.
  */
 export async function paginationLoop<T>(
   http: HttpClient,
