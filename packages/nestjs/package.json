@@ -5,6 +5,16 @@
   "description": "NestJS module for seamless integration with Microsoft Dynamics 365 Business Central.",
   "license": "MIT",
   "author": "David Cheto (ChetoDB)",
+  "homepage": "https://github.com/ChetoDB/ts-business-central/tree/main/packages/nestjs#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChetoDB/ts-business-central.git",
+    "directory": "packages/nestjs"
+  },
+  "bugs": {
+    "url": "https://github.com/ChetoDB/ts-business-central/issues"
+  },
+  "keywords": ["nestjs", "business-central", "dynamics", "typescript", "module", "sdk"],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
