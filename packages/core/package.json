@@ -1,6 +1,6 @@
 {
   "name": "@chetodb/business-central",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "description": "Modern, resilient and type-safe TypeScript SDK for Microsoft Dynamics 365 Business Central.",
   "license": "MIT",
@@ -14,7 +14,15 @@
   "bugs": {
     "url": "https://github.com/ChetoDB/ts-business-central/issues"
   },
-  "keywords": ["business-central", "dynamics", "sdk", "api", "typescript", "erp", "microsoft"],
+  "keywords": [
+    "business-central",
+    "dynamics",
+    "sdk",
+    "api",
+    "typescript",
+    "erp",
+    "microsoft"
+  ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -25,7 +33,9 @@
       }
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc --build",
     "dev": "tsc --build --watch",
