@@ -2,7 +2,7 @@
 
 [![code style: biome](https://img.shields.io/badge/code_style-biome-FFBD2D.svg)](https://biomejs.dev)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Node.js Version](https://img.shields.io/node/v/@chetodb/business-central.svg)](https://nodejs.org)
+[![Node.js Version](https://img.shields.io/badge/node-%3E%3D20.0.0-brightgreen.svg)](https://nodejs.org)
 
 **TypeScript toolkit for Microsoft Dynamics 365 Business Central integration.**
 
@@ -25,15 +25,15 @@
 
 ## 🚀 Getting Started
 
-To install the Core SDK in your project:
+You can choose to install the standalone Core SDK or the NestJS module depending on your architecture.
+
+### � Option 1: Core SDK (Standalone)
 
 ```bash
 pnpm add @chetodb/business-central
-# or
-npm install @chetodb/business-central
 ```
 
-### 🛠 Quick Example
+Perfect for vanilla Node.js, Express, or any TypeScript environment.
 
 ```ts
 import { BusinessCentralClient } from '@chetodb/business-central';
@@ -46,6 +46,32 @@ const client = new BusinessCentralClient({
 
 const customers = await client.get('customers', { top: 5 });
 ```
+
+### 🔌 Option 2: NestJS Module
+
+```bash
+pnpm add @chetodb/nestjs-business-central
+```
+
+Simply import the `BusinessCentralModule` in your `AppModule` and inject the client natively in your services.
+
+```ts
+import { BusinessCentralModule } from '@chetodb/nestjs-business-central';
+
+@Module({
+  imports: [
+    BusinessCentralModule.forRoot({
+      isGlobal: true,
+      tenantId: 'your-tenant-id',
+      companyName: 'CRONUS',
+      azureKeys: [{ name: 'primary', clientId: '...', clientSecret: '...' }]
+    }),
+  ]
+})
+export class AppModule {}
+```
+
+> 👉 [See full NestJS documentation here](./packages/nestjs/README.md)
 
 ---
 
