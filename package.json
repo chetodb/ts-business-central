@@ -13,7 +13,14 @@
   "bugs": {
     "url": "https://github.com/ChetoDB/ts-business-central/issues"
   },
-  "keywords": ["business-central", "dynamics-365", "microsoft", "erp", "sdk", "typescript"],
+  "keywords": [
+    "business-central",
+    "dynamics-365",
+    "microsoft",
+    "erp",
+    "sdk",
+    "typescript"
+  ],
   "packageManager": "pnpm@9.15.4",
   "engines": {
     "node": ">=20.0.0"
@@ -29,6 +36,8 @@
     "test:coverage": "vitest run --coverage",
     "playground": "tsx playground/index.ts",
     "playground:watch": "tsx watch playground/index.ts",
+    "playground:nest": "tsx playground/nestjs.ts",
+    "playground:nest:watch": "tsx watch playground/nestjs.ts",
     "changeset": "changeset",
     "version": "changeset version",
     "release": "pnpm build && changeset publish"
@@ -36,9 +45,16 @@
   "devDependencies": {
     "@biomejs/biome": "^1.9.0",
     "@changesets/cli": "^2.27.0",
+    "@nestjs/common": "^11.0.0",
+    "@nestjs/core": "^11.0.0",
+    "@nestjs/platform-express": "^11.1.16",
+    "@nestjs/testing": "^11.1.16",
     "@vitest/coverage-v8": "^4.0.18",
+    "reflect-metadata": "^0.2.0",
+    "rxjs": "^7.8.0",
     "tsx": "^4.21.0",
     "typescript": "^5.7.0",
+    "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^4.0.18"
   }
 }
