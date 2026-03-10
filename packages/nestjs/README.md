@@ -1,6 +1,4 @@
-# Business Central NestJS Module
-
-> 🚧 **Work In Progress.** This module is currently a stub and is under active development. It is not ready for production use yet. Please check back later.
+# @chetodb/nestjs-business-central
 
 **Seamless integration module for Microsoft Dynamics 365 Business Central in NestJS applications.**
 
@@ -8,20 +6,106 @@
 
 ---
 
-This package will provide a wrapper over the Core SDK to facilitate dependency injection and centralized configuration in NestJS environments.
+This package provides a native NestJS wrapper over the @chetodb/business-central Core SDK to facilitate robust dependency injection and centralized asynchronous configuration.
 
-### ✨ Planned Features
-
-- 🧩 **Native Integration**: Designed following NestJS module patterns.
-- 💉 **Dependency Injection**: Easy access to `BusinessCentralClient` in any service.
-- 🔄 **Async Configuration**: Support for `forRootAsync` with ConfigModule.
-
----
-
-## Local Development
-
-From the monorepo root:
+## 📦 Installation
 
 ```bash
-pnpm --filter @chetodb/nestjs-business-central build
+npm install @chetodb/nestjs-business-central
+# or
+pnpm add @chetodb/nestjs-business-central
+```
+
+## 🚀 Setup
+
+Import the BusinessCentralModule into your root AppModule or any feature module.
+
+### Synchronous Configuration
+
+Use `forRoot` if your configuration is static.
+
+```typescript
+import { Module } from
+\@nestjs/common\';
+import { BusinessCentralModule } from \@chetodb/nestjs-business-central\';
+
+@Module({
+  imports: [
+    BusinessCentralModule.forRoot({
+      isGlobal: true, // Make it available across all modules without re-importing
+      tenantId: \your-tenant-id\',
+      environment: \Sandbox\',
+      companyName: \CRONUS\',
+      azureKeys: [
+        {
+          name: \Primary\',
+          clientId: \your-client-id\',
+          clientSecret: \your-client-secret\',
+        },
+      ],
+    }),
+  ],
+})
+export class AppModule {}
+```
+
+### Asynchronous Configuration
+
+Use `forRootAsync` if your configuration depends on other modules (e.g., ConfigModule).
+
+```typescript
+import { Module } from \@nestjs/common\';
+import { ConfigModule, ConfigService } from \@nestjs/config\';
+import { BusinessCentralModule } from \@chetodb/nestjs-business-central\';
+
+@Module({
+  imports: [
+    ConfigModule.forRoot(),
+    BusinessCentralModule.forRootAsync({
+      isGlobal: true,
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        tenantId: configService.get<string>(\BC_TENANT_ID\')!,
+        environment: configService.get<string>(\BC_ENVIRONMENT\')!,
+        companyName: configService.get<string>(\BC_COMPANY_NAME\'),
+        azureKeys: [
+          {
+            name: \Primary\',
+            clientId: configService.get<string>(\BC_CLIENT_ID\')!,
+            clientSecret: configService.get<string>(\BC_CLIENT_SECRET\')!,
+          },
+        ],
+      }),
+    }),
+  ],
+})
+export class AppModule {}
+```
+
+## 💡 Usage
+
+Once configured, simply inject the core BusinessCentralClient natively in your services or controllers.
+
+✨ **No custom decorators required!** Thanks to NestJS class-based provider tokens.
+
+```typescript
+import { Injectable } from \@nestjs/common\';
+import { BusinessCentralClient, BcFilter } from \@chetodb/business-central\';
+
+@Injectable()
+export class CustomersService {
+  constructor(
+    private readonly bcClient: BusinessCentralClient
+  ) {}
+
+  async getTopCustomers() {
+    const filter = BcFilter.build().gt(\balance\', 1000);
+
+    return this.bcClient.get(\customers\', {
+      top: 10,
+      filter
+    });
+  }
+}
 ```

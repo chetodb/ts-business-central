@@ -14,8 +14,21 @@
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
     "isolatedModules": true,
-    "verbatimModuleSyntax": true
+    "verbatimModuleSyntax": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "baseUrl": ".",
+    "paths": {
+      "@chetodb/business-central": ["./packages/core/src/index.ts"]
+    }
   },
   "references": [{ "path": "./packages/core" }, { "path": "./packages/nestjs" }],
-  "exclude": ["node_modules", "dist", "dumy-nestjs"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    "dumy-nestjs",
+    "**/*.config.ts",
+    "playground",
+    "packages/**/test"
+  ]
 }

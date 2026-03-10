@@ -8,7 +8,9 @@
     "rules": {
       "recommended": true,
       "complexity": {
-        "noForEach": "warn"
+        "noForEach": "warn",
+        "noStaticOnlyClass": "off",
+        "noThisInStatic": "off"
       },
       "style": {
         "noNonNullAssertion": "warn",
@@ -27,6 +29,9 @@
     "ignore": ["**/package.json", "**/*.md"]
   },
   "javascript": {
+    "parser": {
+      "unsafeParameterDecoratorsEnabled": true
+    },
     "formatter": {
       "quoteStyle": "single",
       "semicolons": "always",
@@ -34,6 +39,19 @@
     }
   },
   "files": {
-    "ignore": ["node_modules", "dist", "*.d.ts", "pnpm-lock.yaml", ".agents", "dumy-nestjs"]
+    "ignore": [
+      "node_modules",
+      "dist",
+      "*.d.ts",
+      "pnpm-lock.yaml",
+      ".agents",
+      "dumy-nestjs",
+      "coverage",
+      "*.js.map",
+      "vitest.workspace.js",
+      "packages/**/vitest.config.js",
+      "packages/**/test/setup.js",
+      "playground/**/*.js"
+    ]
   }
 }
