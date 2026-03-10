@@ -23,5 +23,12 @@
     }
   },
   "references": [{ "path": "./packages/core" }, { "path": "./packages/nestjs" }],
-  "exclude": ["node_modules", "dist", "dumy-nestjs"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    "dumy-nestjs",
+    "**/*.config.ts",
+    "playground",
+    "packages/**/test"
+  ]
 }
