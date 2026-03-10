@@ -1,6 +1,6 @@
 {
   "name": "@chetodb/nestjs-business-central",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "type": "module",
   "description": "NestJS module for seamless integration with Microsoft Dynamics 365 Business Central.",
   "license": "MIT",
