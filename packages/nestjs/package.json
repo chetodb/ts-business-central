@@ -26,8 +26,21 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
+      "development": "./src/index.ts",
       "import": {
         "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "default": "./dist/index.js"
+    }
+  },
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "import": {
+          "types": "./dist/index.d.ts",
+          "default": "./dist/index.js"
+        },
         "default": "./dist/index.js"
       }
     }
@@ -50,6 +63,7 @@
   "devDependencies": {
     "@nestjs/common": "^11.0.0",
     "@nestjs/core": "^11.0.0",
+    "@types/node": "^25.4.0",
     "@vitest/coverage-v8": "^4.0.18",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.0",
