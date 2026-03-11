@@ -1,5 +1,13 @@
 # @chetodb/nestjs-business-central
 
+## 0.1.1
+
+### Patch Changes
+
+- 0ba6eb5: fix: resolve nodenext types resolution in exports (Issue #12)
+- Updated dependencies [0ba6eb5]
+  - @chetodb/business-central@0.1.2
+
 ## 0.1.0
 
 ### Minor Changes
