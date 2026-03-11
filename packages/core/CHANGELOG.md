@@ -1,5 +1,11 @@
 # @chetodb/business-central
 
+## 0.1.2
+
+### Patch Changes
+
+- 0ba6eb5: fix: resolve nodenext types resolution in exports (Issue #12)
+
 ## 0.1.1
 
 ### Patch Changes
