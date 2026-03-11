@@ -1,6 +1,6 @@
 {
   "name": "@chetodb/business-central",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
   "description": "Modern, resilient and type-safe TypeScript SDK for Microsoft Dynamics 365 Business Central.",
   "license": "MIT",
