@@ -8,12 +8,26 @@
 
 This package provides a native NestJS wrapper over the @chetodb/business-central Core SDK to facilitate robust dependency injection and centralized asynchronous configuration.
 
+It also re-exports a curated subset of the Core SDK from this package entrypoint, so NestJS consumers can import the most common runtime symbols and types without adding a second direct dependency.
+
 ## 📦 Installation
 
 ```bash
 npm install @chetodb/nestjs-business-central
 # or
 pnpm add @chetodb/nestjs-business-central
+```
+
+Common imports available directly from this package:
+
+```typescript
+import {
+  BcFilter,
+  BusinessCentralClient,
+  type BcClientOptions,
+  type BcGetOptions,
+  type BcGetResponse,
+} from '@chetodb/nestjs-business-central';
 ```
 
 ## 🚀 Setup
@@ -91,7 +105,7 @@ Once configured, simply inject the core BusinessCentralClient natively in your s
 
 ```typescript
 import { Injectable } from \@nestjs/common\';
-import { BusinessCentralClient, BcFilter } from \@chetodb/business-central\';
+import { BusinessCentralClient, BcFilter } from \@chetodb/nestjs-business-central\';
 
 @Injectable()
 export class CustomersService {
