@@ -1,5 +1,11 @@
 # @chetodb/nestjs-business-central
 
+## 0.1.2
+
+### Patch Changes
+
+- Expose a curated subset of the core SDK from the NestJS package entrypoint, including BusinessCentralClient, BcFilter, and common client/query types. This fixes direct imports from @chetodb/nestjs-business-central without re-exporting the full core surface.
+
 ## 0.1.1
 
 ### Patch Changes
