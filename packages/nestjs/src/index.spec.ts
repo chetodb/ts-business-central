@@ -1,6 +1,6 @@
 import { BcFilter, BusinessCentralClient } from '@chetodb/business-central';
-import * as publicApi from './index.js';
 import { describe, expect, it } from 'vitest';
+import * as publicApi from './index.js';
 
 describe('public API', () => {
   it('re-exports the curated core SDK surface from the NestJS package entrypoint', () => {
