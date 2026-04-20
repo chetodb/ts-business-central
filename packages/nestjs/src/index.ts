@@ -3,7 +3,7 @@
  *
  * NestJS integration module for the Business Central SDK.
  */
-export { BcFilter, BusinessCentralClient } from '@chetodb/business-central';
+export { BcFilter, BusinessCentralClient, OAuth2Provider } from '@chetodb/business-central';
 export type {
   AzureConfig,
   AzureKey,
@@ -14,6 +14,12 @@ export type {
   BcGetResponse,
   BcRequestOptions,
   BcSchemaVersion,
+  AuthProvider,
+  TokenInfo,
+  TokenResponse,
+  AuthHeaderProvider,
+  KeyRotator,
+  HttpMethod,
 } from '@chetodb/business-central';
 export * from './constants/business-central.constants.js';
 export * from './interfaces/business-central-module.interfaces.js';
