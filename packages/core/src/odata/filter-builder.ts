@@ -90,7 +90,12 @@ export class BcFilter {
    * May return 501 on older versions or Page-type Web Services.
    */
   in(field: string, values: (string | number)[]): this {
-    if (values.length === 0) return this;
+    if (values.length === 0) {
+      console.warn(
+        `[BC - Filter] .in('${field}', []) called with empty array — condition skipped.`,
+      );
+      return this;
+    }
     const formattedValues = values.map((v) => this.formatValue(v)).join(',');
     return this.pushCondition(`${field} in (${formattedValues})`);
   }
