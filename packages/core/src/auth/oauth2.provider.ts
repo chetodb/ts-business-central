@@ -14,6 +14,7 @@ import type { AuthProvider, TokenInfo, TokenResponse } from './auth.types.js';
  */
 export class OAuth2Provider implements AuthProvider {
   private currentToken: TokenInfo | null = null;
+  private refreshPromise: Promise<string | null> | null = null;
   private currentKey: AzureKey;
 
   private readonly urlBuilder: UrlBuilder;
@@ -65,64 +66,77 @@ export class OAuth2Provider implements AuthProvider {
       return this.currentToken.token;
     }
 
-    const maxRetries = 3;
-    let currentRetry = 0;
+    // Deduplicate concurrent refreshes: join the in-flight promise if one exists.
+    // A forceRefresh caller also joins — the result is still a freshly fetched token.
+    if (this.refreshPromise !== null) return this.refreshPromise;
 
-    while (currentRetry < maxRetries) {
-      try {
-        const tokenUrl = this.urlBuilder.tokenUrl();
+    this.refreshPromise = (async () => {
+      const maxRetries = 3;
+      let currentRetry = 0;
 
-        const response = await fetch(tokenUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            Authorization: `Basic ${btoa(`${this.currentKey.clientId}:${this.currentKey.clientSecret}`)}`,
-          },
-          body: new URLSearchParams({
-            grant_type: this.grantType,
-            scope: this.scope,
-          }).toString(),
-          signal: AbortSignal.timeout(10000),
-        });
+      while (currentRetry < maxRetries) {
+        try {
+          const tokenUrl = this.urlBuilder.tokenUrl();
 
-        if (!response.ok) {
-          throw new Error(`Token request failed: ${response.status} ${response.statusText}`);
-        }
+          const response = await fetch(tokenUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              Authorization: `Basic ${btoa(`${this.currentKey.clientId}:${this.currentKey.clientSecret}`)}`,
+            },
+            body: new URLSearchParams({
+              grant_type: this.grantType,
+              scope: this.scope,
+            }).toString(),
+            signal: AbortSignal.timeout(10000),
+          });
 
-        const data = (await response.json()) as TokenResponse;
-
-        // Cache token, refreshing 5 minutes (300s) before actual expiry
-        this.currentToken = {
-          token: data.access_token,
-          expiresAt: dateAddSeconds(new Date(), data.expires_in - 300),
-          lastUpdate: new Date(),
-        };
-
-        console.debug(
-          `[BC - Auth] New token acquired (Key: ${this.currentKey.name}). Expires: ${dateFormat(this.currentToken.expiresAt)}`,
-        );
-
-        return this.currentToken.token;
-      } catch (error) {
-        currentRetry++;
-        const message = error instanceof Error ? error.message : String(error);
-        console.warn(`[BC - Auth] Token attempt ${currentRetry}/${maxRetries} failed: ${message}`);
-
-        if (currentRetry < maxRetries) {
-          // On rate limit or auth error, try the next key
-          if (this.keys.length > 1) {
-            this.rotateKey();
+          if (!response.ok) {
+            throw new Error(`Token request failed: ${response.status} ${response.statusText}`);
           }
 
-          const delay = 2 ** currentRetry * 1000;
-          console.debug(`[BC - Auth] Retrying token in ${delay / 1000}s...`);
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          const data = (await response.json()) as TokenResponse;
+
+          // Guard against short-lived tokens: ensure expiresAt is always in the future.
+          const ttl = Math.max(data.expires_in - 300, 10);
+          this.currentToken = {
+            token: data.access_token,
+            expiresAt: dateAddSeconds(new Date(), ttl),
+            lastUpdate: new Date(),
+          };
+
+          console.debug(
+            `[BC - Auth] New token acquired (Key: ${this.currentKey.name}). Expires: ${dateFormat(this.currentToken.expiresAt)}`,
+          );
+
+          return this.currentToken.token;
+        } catch (error) {
+          currentRetry++;
+          const message = error instanceof Error ? error.message : String(error);
+          console.warn(
+            `[BC - Auth] Token attempt ${currentRetry}/${maxRetries} failed: ${message}`,
+          );
+
+          if (currentRetry < maxRetries) {
+            // On rate limit or auth error, try the next key
+            if (this.keys.length > 1) {
+              this.rotateKey();
+            }
+
+            const delay = 2 ** currentRetry * 1000;
+            console.debug(`[BC - Auth] Retrying token in ${delay / 1000}s...`);
+            await new Promise((resolve) => setTimeout(resolve, delay));
+          }
         }
       }
-    }
 
-    console.error(`[BC - Auth] Failed to acquire token after ${maxRetries} attempts.`);
-    return null;
+      console.error(`[BC - Auth] Failed to acquire token after ${maxRetries} attempts.`);
+      return null;
+    })().finally(() => {
+      this.refreshPromise = null;
+    });
+
+    return this.refreshPromise;
   }
 
   /**

@@ -176,6 +176,57 @@ describe('OAuth2Provider', () => {
     expect(fetchMock).toHaveBeenCalledTimes(3);
   });
 
+  it('should deduplicate concurrent getToken() calls — only one fetch fires', async () => {
+    fetchMock.mockResolvedValue({
+      ok: true,
+      status: 200,
+      statusText: 'OK',
+      json: () =>
+        Promise.resolve({
+          access_token: 'concurrent-token',
+          expires_in: 3600,
+          token_type: 'Bearer',
+        }),
+    });
+
+    const provider = new OAuth2Provider(resolveClientOptions(baseOptions));
+
+    const [t1, t2, t3] = await Promise.all([
+      provider.getToken(),
+      provider.getToken(),
+      provider.getToken(),
+    ]);
+
+    expect(t1).toBe('concurrent-token');
+    expect(t2).toBe('concurrent-token');
+    expect(t3).toBe('concurrent-token');
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('should not re-fetch immediately when expires_in < 300', async () => {
+    fetchMock.mockResolvedValue({
+      ok: true,
+      status: 200,
+      statusText: 'OK',
+      json: () =>
+        Promise.resolve({
+          access_token: 'short-lived-token',
+          expires_in: 60,
+          token_type: 'Bearer',
+        }),
+    });
+
+    const provider = new OAuth2Provider(resolveClientOptions(baseOptions));
+
+    const first = await provider.getToken();
+    const second = await provider.getToken();
+
+    expect(first).toBe('short-lived-token');
+    expect(second).toBe('short-lived-token');
+    // Without the TTL guard, expiresAt would be in the past and the second call would re-fetch.
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+  });
+
   it('should keep same key when rotateKey is called with a single key', () => {
     const singleKeyProvider = new OAuth2Provider(
       resolveClientOptions({
