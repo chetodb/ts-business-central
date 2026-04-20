@@ -39,22 +39,21 @@ Importa el BusinessCentralModule en tu módulo principal AppModule o cualquier m
 Usa `forRoot` si tu configuración es estática y no depende de variables de entorno mediante un servicio.
 
 ```typescript
-import { Module } from
-\@nestjs/common\';
-import { BusinessCentralModule } from \@chetodb/nestjs-business-central\';
+import { Module } from '@nestjs/common';
+import { BusinessCentralModule } from '@chetodb/nestjs-business-central';
 
 @Module({
   imports: [
     BusinessCentralModule.forRoot({
       isGlobal: true, // Lo hace disponible en todos los módulos de NestJS sin reimporar
-      tenantId: \tu-tenant-id\',
-      environment: \Sandbox\',
-      companyName: \CRONUS\',
+      tenantId: 'tu-tenant-id',
+      environment: 'Sandbox',
+      companyName: 'CRONUS',
       azureKeys: [
         {
-          name: \Primary\',
-          clientId: \tu-client-id\',
-          clientSecret: \tu-client-secret\',
+          name: 'Primary',
+          clientId: 'tu-client-id',
+          clientSecret: 'tu-client-secret',
         },
       ],
     }),
@@ -68,9 +67,9 @@ export class AppModule {}
 Usa `forRootAsync` si tu configuración depende de otros módulos (ej. ConfigModule).
 
 ```typescript
-import { Module } from \@nestjs/common\';
-import { ConfigModule, ConfigService } from \@nestjs/config\';
-import { BusinessCentralModule } from \@chetodb/nestjs-business-central\';
+import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { BusinessCentralModule } from '@chetodb/nestjs-business-central';
 
 @Module({
   imports: [
@@ -80,14 +79,14 @@ import { BusinessCentralModule } from \@chetodb/nestjs-business-central\';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
-        tenantId: configService.get<string>(\BC_TENANT_ID\')!,
-        environment: configService.get<string>(\BC_ENVIRONMENT\')!,
-        companyName: configService.get<string>(\BC_COMPANY_NAME\'),
+        tenantId: configService.get<string>('BC_TENANT_ID')!,
+        environment: configService.get<string>('BC_ENVIRONMENT')!,
+        companyName: configService.get<string>('BC_COMPANY_NAME'),
         azureKeys: [
           {
-            name: \Primary\',
-            clientId: configService.get<string>(\BC_CLIENT_ID\')!,
-            clientSecret: configService.get<string>(\BC_CLIENT_SECRET\')!,
+            name: 'Primary',
+            clientId: configService.get<string>('BC_CLIENT_ID')!,
+            clientSecret: configService.get<string>('BC_CLIENT_SECRET')!,
           },
         ],
       }),
@@ -104,8 +103,8 @@ Una vez configurado, simplemente inyecta la clase principal BusinessCentralClien
 ✨ **¡Sin utilizar decoradores personalizados complejos!** Gracias al soporte de proveedores nativos de clases de NestJS.
 
 ```typescript
-import { Injectable } from \@nestjs/common\';
-import { BusinessCentralClient, BcFilter } from \@chetodb/nestjs-business-central\';
+import { Injectable } from '@nestjs/common';
+import { BusinessCentralClient, BcFilter } from '@chetodb/nestjs-business-central';
 
 @Injectable()
 export class CustomersService {
@@ -115,9 +114,9 @@ export class CustomersService {
   ) {}
 
   async getTopCustomers() {
-    const filter = BcFilter.build().gt(\balance\', 1000);
+    const filter = BcFilter.build().gt('balance', 1000);
 
-    return this.bcClient.get(\customers\', {
+    return this.bcClient.get('customers', {
       top: 10,
       filter
     });
