@@ -1,5 +1,16 @@
 # @chetodb/nestjs-business-central
 
+## 0.2.0
+
+### Minor Changes
+
+- Fix token refresh race condition and TTL guard, expand NestJS re-exports, remove unused HttpRequestConfig, add .in() empty array warning, improve CI/CD pipeline.
+
+### Patch Changes
+
+- Updated dependencies
+  - @chetodb/business-central@0.2.0
+
 ## 0.1.2
 
 ### Patch Changes
