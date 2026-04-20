@@ -13,9 +13,9 @@ export interface BusinessCentralModuleAsyncOptions extends Pick<ModuleMetadata, 
   isGlobal?: boolean;
   useExisting?: Type<BusinessCentralOptionsFactory>;
   useClass?: Type<BusinessCentralOptionsFactory>;
-  // biome-ignore lint/suspicious/noExplicitAny: --- IGNORE ---
+  // biome-ignore lint/suspicious/noExplicitAny: NestJS DI factory signature requires any[] — matches @nestjs/common async module pattern
   useFactory?: (...args: any[]) => Promise<BcClientOptions> | BcClientOptions;
-  // biome-ignore lint/suspicious/noExplicitAny: --- IGNORE ---
+  // biome-ignore lint/suspicious/noExplicitAny: NestJS DI inject tokens can be any injectable value
   inject?: any[];
   extraProviders?: Provider[];
 }
