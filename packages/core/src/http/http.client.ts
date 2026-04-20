@@ -208,7 +208,10 @@ export class HttpClient {
   private async safeReadJson(response: Response): Promise<unknown> {
     try {
       return await response.json();
-    } catch {
+    } catch (err) {
+      console.debug(
+        `[BC HTTPS] Failed to parse response body: ${err instanceof Error ? err.message : String(err)}`,
+      );
       return undefined;
     }
   }
