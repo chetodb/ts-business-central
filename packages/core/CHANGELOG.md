@@ -1,5 +1,13 @@
 # @chetodb/business-central
 
+## 0.3.0
+
+### Minor Changes
+
+- feat(core): auto-chunk large in() filters in get() to avoid URL limits
+
+  `BusinessCentralClient.get()` now transparently detects when a `BcFilter.in()` condition would produce a URL longer than 7 500 characters, splits the values into chunks of 50, fires the requests in parallel, and merges all results into a single array. No API changes — existing `get()` calls with `BcFilter` filters gain this behavior automatically.
+
 ## 0.2.0
 
 ### Minor Changes

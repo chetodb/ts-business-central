@@ -1,6 +1,7 @@
 import { OAuth2Provider } from '../auth/oauth2.provider.js';
 import { HttpClient } from '../http/http.client.js';
 import { UrlBuilder } from '../http/url-builder.js';
+import { BcFilter } from '../odata/filter-builder.js';
 import type { BcClientOptions } from '../types/client.types.js';
 import {
   type BcDebugOptions,
@@ -80,8 +81,28 @@ export class BusinessCentralClient {
   ): Promise<T[] | undefined> {
     const debug = mergeOptions(this.resolvedOptions.debugOptions, debugOptions);
     const startTime = performance.now();
-
     const url = this.urls.getUrl(endpoint, queryOptions);
+
+    // Auto-chunk: if filter is a BcFilter and URL exceeds safe limit, split
+    // transparently into parallel requests and merge results.
+    if (queryOptions?.filter instanceof BcFilter && url.length > 7500) {
+      const chunks = queryOptions.filter.toChunks(50);
+      if (chunks.length > 1) {
+        const results = await Promise.all(
+          chunks.map((chunk) =>
+            this.get<T>(endpoint, { ...queryOptions, filter: chunk }, requestOptions, debugOptions),
+          ),
+        );
+        if (results.some((r) => r === undefined)) return undefined;
+        if (debug.duration) {
+          console.debug(
+            `[BC CLIENT] GET ${endpoint} completed in ${(performance.now() - startTime).toFixed(1)}ms`,
+          );
+        }
+        return (results as T[][]).flat();
+      }
+    }
+
     const result = await paginationLoop<T>(this.http, url, endpoint, debug, requestOptions);
 
     if (debug.duration) {
