@@ -83,4 +83,45 @@ describe('BcFilter', () => {
     const filter = new BcFilter().ge('modifiedAt', date);
     expect(filter.toString()).toBe(`modifiedAt ge ${date.toISOString()}`);
   });
+
+  describe('toChunks', () => {
+    it('returns [this] when no IN condition exists', () => {
+      const f = BcFilter.build().eq('Status', 'Open');
+      const chunks = f.toChunks(2);
+      expect(chunks).toHaveLength(1);
+      expect(chunks[0]).toBe(f);
+    });
+
+    it('returns [this] when values fit within chunkSize', () => {
+      const f = BcFilter.build().in('No', ['A', 'B']);
+      const chunks = f.toChunks(5);
+      expect(chunks).toHaveLength(1);
+      expect(chunks[0]).toBe(f);
+    });
+
+    it('splits values into multiple chunks', () => {
+      const f = BcFilter.build().in('No', ['A', 'B', 'C', 'D', 'E']);
+      const chunks = f.toChunks(2);
+      expect(chunks).toHaveLength(3);
+      expect(chunks[0]!.toString()).toBe("No in ('A','B')");
+      expect(chunks[1]!.toString()).toBe("No in ('C','D')");
+      expect(chunks[2]!.toString()).toBe("No in ('E')");
+    });
+
+    it('preserves other conditions when chunking', () => {
+      const f = BcFilter.build().eq('Type', 'Inventory').in('No', ['A', 'B', 'C']);
+      const chunks = f.toChunks(2);
+      expect(chunks).toHaveLength(2);
+      expect(chunks[0]!.toString()).toBe("Type eq 'Inventory' and No in ('A','B')");
+      expect(chunks[1]!.toString()).toBe("Type eq 'Inventory' and No in ('C')");
+    });
+
+    it('handles numeric values', () => {
+      const f = BcFilter.build().in('Amount', [1, 2, 3]);
+      const chunks = f.toChunks(2);
+      expect(chunks).toHaveLength(2);
+      expect(chunks[0]!.toString()).toBe('Amount in (1,2)');
+      expect(chunks[1]!.toString()).toBe('Amount in (3)');
+    });
+  });
 });

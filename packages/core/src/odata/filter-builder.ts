@@ -11,6 +11,7 @@
  */
 export class BcFilter {
   private filterStrings: string[] = [];
+  private primaryIn: { field: string; values: (string | number)[] } | null = null;
 
   /** Creates a new filter builder instance. */
   static build(): BcFilter {
@@ -96,8 +97,38 @@ export class BcFilter {
       );
       return this;
     }
+    // Track first IN condition so get() can auto-chunk when URL is too long
+    if (this.primaryIn === null) {
+      this.primaryIn = { field, values };
+    }
     const formattedValues = values.map((v) => this.formatValue(v)).join(',');
     return this.pushCondition(`${field} in (${formattedValues})`);
+  }
+
+  /**
+   * Splits this filter into multiple copies, each covering a slice of the
+   * primary `in()` values. Used internally by `BusinessCentralClient.get()`
+   * to stay under Business Central's URL length limit.
+   *
+   * Returns `[this]` when no IN condition exists or values already fit
+   * within `chunkSize`.
+   */
+  toChunks(chunkSize: number): BcFilter[] {
+    if (this.primaryIn === null || this.primaryIn.values.length <= chunkSize) {
+      return [this];
+    }
+
+    const { field, values } = this.primaryIn;
+    const fullInStr = `${field} in (${values.map((v) => this.formatValue(v)).join(',')})`;
+    const baseStr = this.toString();
+
+    const chunks: BcFilter[] = [];
+    for (let i = 0; i < values.length; i += chunkSize) {
+      const chunk = values.slice(i, i + chunkSize);
+      const chunkInStr = `${field} in (${chunk.map((v) => this.formatValue(v)).join(',')})`;
+      chunks.push(BcFilter.build().raw(baseStr.replace(fullInStr, chunkInStr)));
+    }
+    return chunks;
   }
 
   /** Adds a raw filter string as-is. */
