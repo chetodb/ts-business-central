@@ -43,18 +43,18 @@
     "release": "pnpm build && changeset publish"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.0",
-    "@changesets/cli": "^2.27.0",
-    "@nestjs/common": "^11.0.0",
-    "@nestjs/core": "^11.0.0",
-    "@nestjs/platform-express": "^11.1.16",
-    "@nestjs/testing": "^11.1.16",
-    "@vitest/coverage-v8": "^4.0.18",
-    "reflect-metadata": "^0.2.0",
-    "rxjs": "^7.8.0",
-    "tsx": "^4.21.0",
-    "typescript": "^5.7.0",
+    "@biomejs/biome": "^1.9.4",
+    "@changesets/cli": "^2.31.1",
+    "@nestjs/common": "^11.2.8",
+    "@nestjs/core": "^11.2.8",
+    "@nestjs/platform-express": "^11.2.8",
+    "@nestjs/testing": "^11.2.8",
+    "@vitest/coverage-v8": "^4.1.12",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3",
     "vite-tsconfig-paths": "^6.1.1",
-    "vitest": "^4.0.18"
+    "vitest": "^4.1.12"
   }
 }

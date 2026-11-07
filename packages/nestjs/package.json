@@ -60,13 +60,13 @@
     "rxjs": "^7.0.0"
   },
   "devDependencies": {
-    "@nestjs/common": "^11.0.0",
-    "@nestjs/core": "^11.0.0",
-    "@types/node": "^25.4.0",
-    "@vitest/coverage-v8": "^4.0.18",
-    "reflect-metadata": "^0.2.0",
-    "rxjs": "^7.8.0",
-    "typescript": "^5.7.0",
-    "vitest": "^4.0.18"
+    "@nestjs/common": "^11.2.8",
+    "@nestjs/core": "^11.2.8",
+    "@types/node": "^25.9.9",
+    "@vitest/coverage-v8": "^4.1.12",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.12"
   }
 }
