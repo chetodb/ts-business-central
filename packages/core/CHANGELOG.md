@@ -1,5 +1,11 @@
 # @chetodb/business-central
 
+## 0.3.1
+
+### Patch Changes
+
+- 022aafc: Update development dependencies.
+
 ## 0.3.0
 
 ### Minor Changes

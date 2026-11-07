@@ -1,5 +1,13 @@
 # @chetodb/nestjs-business-central
 
+## 0.2.2
+
+### Patch Changes
+
+- 022aafc: Update development dependencies.
+- Updated dependencies [022aafc]
+  - @chetodb/business-central@0.3.1
+
 ## 0.2.1
 
 ### Patch Changes
